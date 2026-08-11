@@ -1,3 +1,22 @@
+# Init instructions for the AI agent
+
+If you are reading this, the AI has been initialized in the project for the
+first time.
+
+Before executing any changes, tell the user what you plan to do and receive
+their explicit permission. Do not modify files, run commands that change
+project state, or perform other implementation actions before permission is
+received.
+
+Complete the following steps:
+
+1. Add `ruff`, `pyright`, and `mypy` to the `pre-commit` hooks.
+2. Replace `project-name` and `project_name` placeholders in configuration and
+   infrastructure with the actual project name. Rename related containers,
+   services, aliases, images, volumes, database defaults, and package metadata.
+3. Keep this `AGENTS.md` file after completing these steps. Do not delete or
+   remove these instructions.
+
 # Project architecture
 
 - bootstrap — application assembly and dependency wiring.
