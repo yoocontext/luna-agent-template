@@ -14,14 +14,5 @@ pg:
 pg-down:
     {{compose}} -f docker_compose/pg.yaml down
 
-minio:
-    {{compose}} -f docker_compose/minio.yaml up -d
-
-minio-down:
-    {{compose}} -f docker_compose/minio.yaml down
-
-redis:
-    {{compose}} -f docker_compose/redis.yaml up -d
-
-redis-down:
-    {{compose}} -f docker_compose/redis.yaml down
+run:
+    uv run uvicorn bootstrap.app:create_app --factory --app-dir src --reload

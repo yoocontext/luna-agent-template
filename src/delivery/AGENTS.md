@@ -35,5 +35,12 @@ request schema → mapper → Cm → use case → Rs → mapper → response sch
 
 ## Errors
 
-Map application errors to transport errors in one place per transport, for
-example `api/v1/http/errors.py`. Register it once in bootstrap.
+Each transport maps errors in one file, for example `api/v1/http/errors.py`:
+
+- application errors → status by category, body
+  `{"error": {"code", "message", "details"}}`;
+- request validation errors → 422 in the same shape;
+- anything else → 500 without details.
+
+Handlers are registered once in `bootstrap/app.py`. Do not add per-error
+handlers; a new error only needs the right category.

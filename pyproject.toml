@@ -4,14 +4,14 @@ version = "0.1.0"
 description = "Add your description here"
 requires-python = ">=3.12"
 dependencies = [
-  "aiobotocore>=2.25.2",
   "asyncpg>=0.30.0",
   "dishka>=1.7.2",
-  "faststream[rabbit]>=0.6.3",
+  "fastapi>=0.142.2",
   "greenlet>=3.2.2",
   "pydantic-settings>=2.14.1",
-  "redis>=7.1.0",
   "sqlalchemy>=2.0.41",
+  "uuid-utils>=1.0.0",
+  "uvicorn>=0.54.0",
 ]
 
 [dependency-groups]

@@ -28,33 +28,21 @@ pre-commit quality checks.
    PGADMIN_EMAIL=admin@example.com
    PGADMIN_PASSWORD=change-me
    PGADMIN_PORT=5050
-
-   REDIS__PORT=6379
-   REDIS__PASSWORD=change-me
-
-   S3__ACCESS_KEY_ID=minioadmin
-   S3__SECRET_ACCESS_KEY=change-me
-   MINIO__API_PORT=9000
-   MINIO__CONSOLE_PORT=9001
    ```
 
-5. Add the project-specific `Dockerfile` and application entrypoint before
-   running the app container; this repository provides architecture and
-   infrastructure scaffolding, not finished product behavior.
+5. Add the project-specific `Dockerfile` before running the app container.
 
 ## Commands
 
 ```bash
-just pg redis minio                 # start infrastructure
-just pg-down redis-down minio-down  # stop infrastructure
-just app                            # build/start the implemented app
+just pg                            # start Postgres
+just pg-down                       # stop Postgres
+just run                           # run the app locally with reload
+just app                           # build/start the app container
 
-uv run pre-commit run --all-files   # Ruff, mypy, pyright
-uv run pytest                       # tests
+uv run pre-commit run --all-files  # Ruff, mypy, pyright
+uv run pytest                      # tests
 ```
-
-RabbitMQ is not included in Compose; provide a broker and configure
-`RMQ__RABBIT_BROKER_URL` when FastStream is used.
 
 ## Architecture
 

@@ -3,9 +3,6 @@ from dishka import AsyncContainer, make_async_container
 from bootstrap.ioc.providers.bootstrap.settings import SettingsProvider
 from bootstrap.ioc.providers.infra.alchemy import AlchemyProvider
 from bootstrap.ioc.providers.infra.clock import ClockProvider
-from bootstrap.ioc.providers.infra.faststream import FastStreamProvider
-from bootstrap.ioc.providers.infra.redis import RedisProvider
-from bootstrap.ioc.providers.infra.s3 import S3Provider, S3ServicesProvider
 
 
 def create_container() -> AsyncContainer:
@@ -13,8 +10,4 @@ def create_container() -> AsyncContainer:
         SettingsProvider(),
         ClockProvider(),
         AlchemyProvider(),
-        RedisProvider(),
-        FastStreamProvider(),
-        S3Provider(),
-        S3ServicesProvider(),
     )

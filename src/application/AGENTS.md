@@ -34,6 +34,32 @@ Pick the first that fits:
 
 Use cases do not call other use cases; move the shared part into a service.
 
+## Errors
+
+`exceptions.py` defines `ApplicationError` and four categories:
+
+- `NotFoundError` — the requested thing does not exist.
+- `InvalidInputError` — the input breaks a rule.
+- `InvalidStateError` — the current state does not allow the action.
+- `AccessDeniedError` — the user may not do this.
+
+```python
+@dataclass(eq=False, kw_only=True)
+class OrderNotPendingError(InvalidStateError):
+    order_id: UUID
+
+    @property
+    def message(self) -> str:
+        return "Order is not pending"
+```
+
+- A concrete error inherits exactly one category. Do not add categories or
+  domain base classes.
+- Add an error only for a case the client or caller must tell apart.
+- Fields are returned to the client as `details`; put only safe data there.
+- Override `message` when the category text is not enough.
+- Declare an error next to the entity, use case, or service that raises it.
+
 ## Interfaces
 
 One component → one interface.
@@ -45,8 +71,8 @@ infra/dm/payments/payment.py
 infra/queries/billing/autopay.py
 → interfaces/queries/billing/autopay.py
 
-infra/s3/*
-→ interfaces/s3.py
+infra/clock.py
+→ interfaces/clock.py
 ```
 
 See `infra/dm/AGENTS.md` and `infra/queries/AGENTS.md` for what belongs in
