@@ -1,5 +1,11 @@
-from pydantic import BaseModel, Field
-from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic import (
+    BaseModel,
+    Field,
+)
+from pydantic_settings import (
+    BaseSettings,
+    SettingsConfigDict,
+)
 
 
 class PgSettings(BaseModel):

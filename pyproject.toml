@@ -25,9 +25,15 @@ dev = [
 [tool.ruff]
 line-length = 80
 
+[tool.ruff.format]
+skip-magic-trailing-comma = false
+
 [tool.ruff.lint]
-select = ["E", "F", "I", "C90", "N"]
+select = ["E", "F", "I", "C90", "N", "COM"]
 ignore = ["E203", "E266"]
+
+[tool.ruff.lint.isort]
+split-on-trailing-comma = true
 
 [tool.pytest.ini_options]
 pythonpath = ["src", "tests"]
