@@ -1,6 +1,6 @@
 # Luna Agent Template
 
-Lightweight Python 3.12 application scaffold with four flat layers, dependency
+Lightweight Python 3.14 application scaffold with four flat layers, dependency
 injection, Docker Compose infrastructure, local `AGENTS.md` guides, and
 pre-commit quality checks.
 
@@ -40,7 +40,7 @@ just pg-down                       # stop Postgres
 just run                           # run the app locally with reload
 just app                           # build/start the app container
 
-uv run pre-commit run --all-files  # Ruff, mypy, pyright
+uv run pre-commit run --all-files  # Ruff, pyright
 uv run pytest                      # tests
 ```
 

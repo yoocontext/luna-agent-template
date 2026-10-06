@@ -33,6 +33,7 @@ class Order:
 - Change state only through entity methods that return a new instance via
   `replace`. Do not call `replace` on an entity outside its own methods.
 - Pass time as an `at` argument.
+- Generate new ids with `uuid.uuid7()`.
 
 ## File structure
 

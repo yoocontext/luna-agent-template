@@ -1,6 +1,5 @@
 .git
 .idea
-.mypy_cache
 .pytest_cache
 .ruff_cache
 .venv
@@ -16,5 +15,4 @@ tests
 docker_compose
 AGENTS.md
 pyrightconfig.json
-mypy.ini
 .pre-commit-config.yaml

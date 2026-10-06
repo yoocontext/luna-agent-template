@@ -59,6 +59,10 @@ class OrderNotPendingError(InvalidStateError):
 - Fields are returned to the client as `details`; put only safe data there.
 - Override `message` when the category text is not enough.
 - Declare an error next to the entity, use case, or service that raises it.
+- Declare errors that an interface may raise next to that interface.
+- infra raises only errors declared in the interface it implements.
+  Technical failures (connection, timeout) propagate unchanged and become 500.
+- Other layers do not define error hierarchies.
 
 ## Interfaces
 

@@ -1,11 +1,9 @@
 from datetime import UTC, datetime
-from uuid import UUID
+from uuid import UUID, uuid7
 
 from sqlalchemy import DateTime, Integer
 from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy.types import Uuid
-
-from application.uuid7_gen import uuid7_factory
 
 
 class IntPkMixin:
@@ -16,7 +14,7 @@ class UuidPkMixin:
     id: Mapped[UUID] = mapped_column(
         Uuid(as_uuid=True),
         primary_key=True,
-        default=uuid7_factory,
+        default=uuid7,
     )
 
 
