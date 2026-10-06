@@ -1,4 +1,7 @@
-from dishka import AsyncContainer, make_async_container
+from dishka import (
+    AsyncContainer,
+    make_async_container,
+)
 
 from bootstrap.ioc.providers.bootstrap.settings import SettingsProvider
 from bootstrap.ioc.providers.infra.alchemy import AlchemyProvider
