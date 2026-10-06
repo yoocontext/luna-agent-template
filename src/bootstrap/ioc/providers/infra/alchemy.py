@@ -10,7 +10,9 @@ from sqlalchemy.ext.asyncio import (
     create_async_engine,
 )
 
+from application.interfaces.transaction_manager import ITransactionManager
 from bootstrap.settings import PgSettings
+from infra.transaction_manager import AlchemyTransactionManager
 
 
 class AlchemyProvider(Provider):
@@ -44,3 +46,10 @@ class AlchemyProvider(Provider):
             except Exception:
                 await session.rollback()
                 raise
+
+    @provide(scope=Scope.REQUEST)
+    def transaction_manager(
+        self,
+        session: AsyncSession,
+    ) -> ITransactionManager:
+        return AlchemyTransactionManager(session=session)
