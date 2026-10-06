@@ -25,6 +25,3 @@ redis:
 
 redis-down:
     {{compose}} -f docker_compose/redis.yaml down
-
-alembic-upgrade-head:
-    uv run alembic upgrade head

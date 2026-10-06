@@ -3,7 +3,7 @@
 from dishka import Provider, Scope, provide
 from redis.asyncio import Redis
 
-from bootstrap.settings import Settings
+from bootstrap.settings import RedisSettings
 
 
 class RedisProvider(Provider):
@@ -17,15 +17,15 @@ class RedisProvider(Provider):
     @provide(scope=Scope.APP)
     def redis(
         self,
-        settings: Settings,
+        settings: RedisSettings,
     ) -> Redis:
         if self.redis_client:
             return self.redis_client
 
         else:
             return Redis(
-                host=settings.redis.host,
-                port=settings.redis.port,
-                db=settings.redis.db,
-                password=settings.redis.password,
+                host=settings.host,
+                port=settings.port,
+                db=settings.db,
+                password=settings.password,
             )

@@ -34,6 +34,7 @@ ignore = ["E203", "E266"]
 [tool.pytest.ini_options]
 pythonpath = ["src", "tests"]
 testpaths = ["tests"]
+markers = ["e2e: end-to-end tests through an external entry point"]
 
 [tool.coverage.run]
 source = ["src"]

@@ -1,22 +1,3 @@
-# Init instructions for the AI agent
-
-If you are reading this, the AI has been initialized in the project for the
-first time.
-
-Before executing any changes, tell the user what you plan to do and receive
-their explicit permission. Do not modify files, run commands that change
-project state, or perform other implementation actions before permission is
-received.
-
-Complete the following steps:
-
-1. Add `ruff`, `pyright`, and `mypy` to the `pre-commit` hooks.
-2. Replace `project-name` and `project_name` placeholders in configuration and
-   infrastructure with the actual project name. Rename related containers,
-   services, aliases, images, volumes, database defaults, and package metadata.
-3. Keep this `AGENTS.md` file after completing these steps. Do not delete or
-   remove these instructions.
-
 # Project architecture
 
 - bootstrap — application assembly and dependency wiring.
@@ -34,6 +15,15 @@ Complete the following steps:
 ### Import rule
 
 - Import only layers listed above.
+
+## Transaction boundaries
+
+- Services, dm, and queries share the caller's database session. A
+  `commit()` or `rollback()` inside them affects the caller's entire
+  transaction and may break the atomicity of the scenario.
+- Choose transaction boundaries with the calling scenario in mind. When a
+  component needs an independent commit or rollback, use a separate session
+  and make that transaction ownership explicit in its contract.
 
 ## src/bootstrap
 
@@ -72,4 +62,47 @@ Do not create `helpers` or `utils` packages.
 Avoid nested classes and nested functions.
 
 Do not introduce constants for configuration values.
-Use `settings` sourced from `.env` or `config.toml`.
+Add them to `src/bootstrap/settings.py`: a `pydantic` model per area nested in
+the root `Settings` and read from `.dev.env` as `{AREA}__{FIELD}`.
+
+## Readability
+
+Public methods read as a scenario: a short sequence of named steps. Move
+mechanics into private methods, functions, or other components.
+
+```python
+async def renew(self, *, subscription: Subscription, at: datetime) -> Payment:
+    payment = self._create_payment(subscription=subscription, at=at)
+
+    # provider rejects repeated charges without the same key
+    key = self._idempotency_key(payment=payment)
+
+    await self._provider.charge(payment=payment, key=key)
+
+    return payment
+```
+
+- Keep one level of abstraction per method: do not mix scenario steps with
+  low-level details.
+- Name methods by what they do in the domain: `charge_renewal`, not
+  `process` or `handle_data`.
+- A private method is either a named scenario step or hides a non-trivial
+  mechanism. Do not add one-line wrappers that only rename a call.
+- Do not write defensive code for states that types or invariants already
+  exclude.
+
+## Docstrings and comments
+
+- Add a docstring to a class, method, or function only when it makes the
+  component easier to understand: what it does and why, in a few lines.
+  Skip it when the name already says that.
+- Comment only what the code cannot say: why a step exists, workarounds,
+  hardcoded values, and special cases. Keep comments short and lowercase,
+  with a blank line before each.
+
+## Git rules
+
+- Base branch: `dev`. Branch from `dev` and open pull requests into `dev`.
+- `main` receives releases only.
+- Branch names: `feat/{short-name}` for features, `fix/{short-name}` for fixes.
+  Use kebab-case for `{short-name}`.

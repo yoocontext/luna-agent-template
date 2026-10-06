@@ -2,23 +2,21 @@
 
 Lightweight Python 3.12 application scaffold with four flat layers, dependency
 injection, Docker Compose infrastructure, local `AGENTS.md` guides, and
-pre-commit quality checks. It intentionally has no modules or code-generation
-workflow.
+pre-commit quality checks.
 
 ## Start a project
 
 1. Create a repository with **Use this template**.
 2. Replace `project-name` (slugs, images, services) and `project_name`
    (Python/database identifiers) with the real project name.
-3. Follow the initialization checklist in the root `AGENTS.md`; keep that file.
-4. Install dependencies and hooks:
+3. Install dependencies and hooks:
 
    ```bash
    uv sync --all-groups
    uv run pre-commit install
    ```
 
-5. Create `.dev.env`:
+4. Create `.dev.env`:
 
    ```dotenv
    APP_PORT=8003
@@ -34,13 +32,13 @@ workflow.
    REDIS__PORT=6379
    REDIS__PASSWORD=change-me
 
+   S3__ACCESS_KEY_ID=minioadmin
+   S3__SECRET_ACCESS_KEY=change-me
    MINIO__API_PORT=9000
    MINIO__CONSOLE_PORT=9001
-   MINIO__ROOT_USER=minioadmin
-   MINIO__ROOT_PASSWORD=change-me
    ```
 
-6. Add the project-specific `Dockerfile` and application entrypoint before
+5. Add the project-specific `Dockerfile` and application entrypoint before
    running the app container; this repository provides architecture and
    infrastructure scaffolding, not finished product behavior.
 
@@ -68,5 +66,4 @@ RabbitMQ is not included in Compose; provide a broker and configure
 | `infra` | external implementations | application contracts |
 
 Keep dependencies registered in `src/bootstrap/ioc/`. Do not instantiate them
-outside IoC, and do not introduce modules or cross-layer imports beyond the
-rules in `AGENTS.md`.
+outside IoC. See `AGENTS.md` for the full rules.

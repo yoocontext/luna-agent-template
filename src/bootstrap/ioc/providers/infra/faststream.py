@@ -6,7 +6,7 @@ from dishka import Provider, Scope, provide
 from faststream import FastStream
 from faststream.rabbit import RabbitBroker
 
-from bootstrap.settings import Settings
+from bootstrap.settings import RmqSettings
 
 
 class FastStreamProvider(Provider):
@@ -25,9 +25,9 @@ class FastStreamProvider(Provider):
     @provide(scope=Scope.APP)
     async def broker(
         self,
-        settings: Settings,
+        settings: RmqSettings,
     ) -> AsyncIterable[RabbitBroker]:
-        connection_string: str = settings.rmq.rabbit_broker_url
+        connection_string: str = settings.rabbit_broker_url
 
         if self.connection_string:
             connection_string = self.connection_string
